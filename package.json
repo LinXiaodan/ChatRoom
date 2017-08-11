@@ -1,0 +1,22 @@
+{
+  "name": "hello-ws",
+  "version": "1.0.0",
+  "description": "websocket project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "ws",
+    "websocket"
+  ],
+  "author": "Lerrety Lin",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:LinXiaodan/ChatRoom.git"
+  },
+  "dependencies": {
+    "ws": "1.1.1"
+  }
+}
