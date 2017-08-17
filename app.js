@@ -10,7 +10,9 @@ const templating = require('./templating');
 
 const controller = require('./controller');
 
-const WebSocektServer = require('ws').Server;
+const WebSocketServer = require('ws').Server;
+
+const isProduction = process.env.NODE_ENV === 'production';//判断当前环境是否是production环境。
 
 const Cookies = require('cookies');
 const url = require('url');
@@ -38,6 +40,12 @@ app.use(templating('views', {
 
 //add controller: 处理URL的路由
 app.use(controller());
+
+//添加静态文件处理的包，比如获取'static/css/bootstrap.css'的URL为'http://localhost:3000/static/css/bootstrap.css'
+if(!isProduction){
+    const serve = require('koa-static');
+    app.use(serve('.'));
+}
 
 let server = app.listen(3000);
 
@@ -155,45 +163,3 @@ function createMessage(type, user, data){
 app.wss = createWebSocketServer(server, onConnect, onMessage, onClose);
 
 console.log('\napp started at port 3000...');
-
-/*
-//websocket server
-// 导入WebSocket模块:
-const WebSocket = require('ws');
-
-// 引用Server类:
-const WebSocketServer = WebSocket.Server;
-
-// 实例化:
-const wss = new WebSocketServer({
-    port: 3000
-});
-wss.on('connection', function (ws) {
-    console.log('[SERVER] connection()');
-    ws.on('message', function (message) {
-        console.log(`[SERVER] Received: ${message}`);
-        ws.send(`ECHO: ${message}`, (err) => {
-            if (err) {
-                console.log(`[SERVER] error: ${err}`);
-            }
-        });
-    })
-});
-
-console.log('ws server started at port 3000...');
-*/
-
-/*
-//client
-let ws = new WebSocket('ws://localhost:3000/test');
-
-// 打开WebSocket连接后立刻发送一条消息:
-ws.on('open', function () {
-    console.log(`[CLIENT] open()`);
-    ws.send('Hello!');
-});
-
-// 响应收到的消息:
-ws.on('message', function (message) {
-    console.log(`[CLIENT] Received: ${message}`);
-});*/
