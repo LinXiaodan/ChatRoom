@@ -36,4 +36,4 @@
 ```
     npm start
 ```
-4.浏览器访问 http://localhost:3000
+4. 浏览器访问 http://localhost:3000
